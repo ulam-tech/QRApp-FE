@@ -1,3 +1,4 @@
+# Frontend dla aplikacji QRApp
 #### Projekt jest realizowany z wykorzystaniem git flow
 ##### Struktura nazwenictwa git flow
 Branch name for production releases: [master]
