@@ -11,7 +11,6 @@ import * as authActions from '../store/actions/auth';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
 
   return (
     <View style={styles.container}>
@@ -19,7 +18,56 @@ export default function HomeScreen() {
 
         <View style={styles.getStartedContainer}>
 
-          <Text style={styles.getStartedText}>Home Page</Text>
+          <Text style={styles.getStartedText}>Login Page</Text>
+
+          <Formik
+              initialValues={{ email: '', password: '' }}
+              onSubmit={values => {
+                dispatch(authActions.login(
+                    values.email,
+                    values.password
+                ));
+              }}
+              validationSchema={yup.object().shape({
+                email: yup
+                    .string()
+                    .email()
+                    .required(),
+                password: yup
+                    .string()
+                    .min(6)
+                    .required(),
+              })}
+          >
+            {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
+                <Fragment>
+                  <TextInput
+                      value={values.email}
+                      onChangeText={handleChange('email')}
+                      onBlur={() => setFieldTouched('email')}
+                      placeholder="E-mail"
+                  />
+                  {touched.email && errors.email &&
+                  <Text style={{ fontSize: 10, color: 'red' }}>{errors.email}</Text>
+                  }
+                  <TextInput
+                      value={values.password}
+                      onChangeText={handleChange('password')}
+                      placeholder="Password"
+                      onBlur={() => setFieldTouched('password')}
+                      secureTextEntry={true}
+                  />
+                  {touched.password && errors.password &&
+                  <Text style={{ fontSize: 10, color: 'red' }}>{errors.password}</Text>
+                  }
+                  <Button
+                      title='Sign In'
+                      disabled={!isValid}
+                      onPress={handleSubmit}
+                  />
+                </Fragment>
+            )}
+          </Formik>
 
         </View>
 
