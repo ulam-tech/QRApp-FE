@@ -9,7 +9,7 @@ import * as yup from 'yup';
 
 import * as authActions from '../store/actions/auth';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
 
   return (
@@ -68,6 +68,13 @@ export default function HomeScreen() {
                 </Fragment>
             )}
           </Formik>
+
+          <Button
+              title="Register"
+              onPress={() =>
+                  navigation.navigate('Register Page')
+              }
+          />
 
         </View>
 

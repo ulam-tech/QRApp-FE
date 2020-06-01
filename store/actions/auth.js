@@ -78,6 +78,37 @@ export const login = (email, password) => {
   }
 };
 
+export const register = (username, email, password, firstname, lastname) => {
+  return dispatch => {
+    const authData = {
+      user: {
+        username: username,
+        email: email,
+        password: password,
+        firstname: firstname,
+        lastname: lastname
+      }
+    };
+    axios.post('https://qrapp.ulam.tech/signup', authData)
+        .then(res => {
+          const token = res.headers.authorization.split(' ')[1]
+          const user = res.data;
+          const expirationDate = new Date(new Date().getTime() + user.exp * 1000)
+          dispatch(
+              authenticate(
+                  user.id,
+                  token,
+                  parseInt(expirationDate)
+              )
+          );
+          saveDataToStorage(token, user.id, expirationDate);
+        })
+        .catch(err => {
+          console.log('Error: ', err)
+        })
+  }
+};
+
 export const logout = () => {
   clearLogoutTimer();
   AsyncStorage.removeItem('userData');

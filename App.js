@@ -17,6 +17,7 @@ import LinkingConfiguration from './navigation/LinkingConfiguration';
 
 import authReducer from './store/reducers/auth';
 import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
 
 // Zmienne
 
@@ -42,6 +43,7 @@ const App = () => {
               <Stack.Screen name="Root" component={BottomTabNavigator} /> :
               <Stack.Screen name="Login Page" component={LoginScreen} />
           }
+          <Stack.Screen name="Register Page" component={SignupScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
